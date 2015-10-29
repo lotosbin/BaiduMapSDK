@@ -75,6 +75,13 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/design/23.1.0/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.1.0/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.baidu.mapapi/base/3.6.0-SNAPSHOT/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.baidu.mapapi/cloud/3.6.0-SNAPSHOT/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.baidu.mapapi/location/6.13-SNAPSHOT/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.baidu.mapapi/map/3.6.0-SNAPSHOT/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.baidu.mapapi/radar/3.6.0-SNAPSHOT/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.baidu.mapapi/search/3.6.0-SNAPSHOT/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.baidu.mapapi/util/3.6.0-SNAPSHOT/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/jacoco" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/javaResources" />
@@ -92,18 +99,17 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 23 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" exported="" name="map-3.6.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="recyclerview-v7-23.1.0" level="project" />
+    <orderEntry type="library" exported="" name="radar-3.6.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" exported="" name="cloud-3.6.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" exported="" name="location-6.13-SNAPSHOT" level="project" />
+    <orderEntry type="library" exported="" name="base-3.6.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" exported="" name="util-3.6.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" exported="" name="search-3.6.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="support-v4-23.1.0" level="project" />
     <orderEntry type="library" exported="" name="design-23.1.0" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-23.1.0" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-23.1.0" level="project" />
-    <orderEntry type="module" module-name="radar" exported="" />
-    <orderEntry type="module" module-name="search" exported="" />
-    <orderEntry type="module" module-name="base" exported="" />
-    <orderEntry type="module" module-name="util" exported="" />
-    <orderEntry type="module" module-name="cloud" exported="" />
-    <orderEntry type="module" module-name="all" exported="" />
-    <orderEntry type="module" module-name="map" exported="" />
-    <orderEntry type="module" module-name="location" exported="" />
   </component>
 </module>

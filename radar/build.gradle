@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply from: '../maven_push.gradle'
 
 android {
     compileSdkVersion 23
@@ -19,5 +20,6 @@ android {
 }
 
 dependencies {
+    compile project(':base')
     compile files('libs/baidumapapi_radar_v3_6_0.jar')
 }
