@@ -1,0 +1,104 @@
+apply plugin: 'maven'
+apply plugin: 'signing'
+
+version=VERSION_NAME
+
+//是否为正式发布版本
+def isReleaseBuild(){
+    return version.contains('SNAPSHOT') == false
+}
+
+group = 'com.baidu.mapapi'
+
+//release 发布maven仓库地址
+def RELEASE_REPOSITORY_URL = "http://192.168.0.89:8081/nexus/content/repositories/releases/"
+
+//SNAPSHOT 发布maven仓库地址
+def SNAPSHOT_REPOSITORY_URL = "http://192.168.0.89:8081/nexus/content/repositories/snapshots/"
+
+def publishing_url = SNAPSHOT_REPOSITORY_URL
+
+
+def isSnapshot = version.endsWith('-SNAPSHOT')
+def sonatypeRepositoryUrl
+if(isSnapshot) {
+    sonatypeRepositoryUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
+} else {
+    sonatypeRepositoryUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+}
+
+signing {
+    sign configurations.archives
+}
+
+//发布脚本
+//配置上传任务
+uploadArchives {
+    repositories {
+        mavenDeployer {
+             if(project.hasProperty('SONATYPE_USERNAME') && project.hasProperty('SONATYPE_PASSWORD')) {
+                beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+                repository(url: sonatypeRepositoryUrl) {
+                    authentication(userName: SONATYPE_USERNAME, password: SONATYPE_PASSWORD)
+                }
+            } else {
+                println "Settings sonatypeUsername/sonatypePassword missing/incomplete for ${project.name}"
+            }
+
+            pom.project {
+                name project.name
+                packaging 'aar'
+                description 'Baidu map api'
+                url 'https://github.com/nb7123/BaiduMapSDK'
+
+                scm {
+                    url 'scm:git@github.com:nb7123/BaiduMapSDK.git'
+                    connection 'scm:git@github.com:nb7123/BaiduMapSDK.git'
+                    developerConnection 'scm:git@github.com:nb7123/BaiduMapSDK.git'
+                }
+
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        distribution 'michael'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'nb7123'
+                        name 'michael'
+                        email 'nb7123@gmail.com'
+                    }
+                }
+
+                issueManagement {
+                    system 'GitHub Issues'
+                    url 'https://github.com/nb7123/BaiduMapSDK/issues'
+                }
+
+                organization {
+                    name 'nb7123'
+                    url 'https://github.com/nb7123'
+                }
+            }
+        }
+    }
+}
+
+task testXX << {
+    if (project.hasProperty('SONATYPE_USERNAME'))
+    {
+        println(SONATYPE_USERNAME)
+    }
+    else
+    {
+        println('No sonatypeUsername')
+    }
+
+    if (project.hasProperty('VERSION_NAME'))
+    {
+        println(VERSION_NAME)
+    }
+}
