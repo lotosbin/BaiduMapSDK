@@ -24,13 +24,13 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.0'
     compile 'com.android.support:design:23.1.0'
 
-    compile 'com.baidu.mapapi:base:3.6.0-SNAPSHOT'
-    compile 'com.baidu.mapapi:map:3.6.0-SNAPSHOT'
-    compile 'com.baidu.mapapi:cloud:3.6.0-SNAPSHOT'
-    compile 'com.baidu.mapapi:radar:3.6.0-SNAPSHOT'
-    compile 'com.baidu.mapapi:search:3.6.0-SNAPSHOT'
-    compile 'com.baidu.mapapi:util:3.6.0-SNAPSHOT'
-    compile 'com.baidu.mapapi:location:6.13-SNAPSHOT'
+    compile 'com.baidu.mapapi:base:3.6.0'
+    compile 'com.baidu.mapapi:map:3.6.0'
+    compile 'com.baidu.mapapi:cloud:3.6.0'
+    compile 'com.baidu.mapapi:radar:3.6.0'
+    compile 'com.baidu.mapapi:search:3.6.0'
+    compile 'com.baidu.mapapi:util:3.6.0'
+    compile 'com.baidu.mapapi:location:6.13'
 
 //    compile project(':map')
 //    compile project(':all')
