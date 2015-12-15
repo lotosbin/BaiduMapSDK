@@ -52,29 +52,6 @@ dependencies {
     compile 'com.baidu.mapapi:location:6.13'
 }
 ```
-
-**development snapshots**
-
-https://oss.sonatype.org/content/repositories/snapshots/com/baidu/mapapi/
-
-Gradle
-```groovy
-repositories {
-  maven {
-    url 'https://oss.sonatype.org/content/repositories/snapshots/'
-  }
-}
-dependencies {
-	compile 'com.baidu.mapapi:base:3.6.0-SNAPSHOT'
-    compile 'com.baidu.mapapi:map:3.6.0-SNAPSHOT'
-    compile 'com.baidu.mapapi:cloud:3.6.0-SNAPSHOT'
-    compile 'com.baidu.mapapi:radar:3.6.0-SNAPSHOT'
-    compile 'com.baidu.mapapi:search:3.6.0-SNAPSHOT'
-    compile 'com.baidu.mapapi:util:3.6.0-SNAPSHOT'
-    compile 'com.baidu.mapapi:location:6.13-SNAPSHOT'
-}
-```
-
 Documentation, Features and Examples
 ------------------------------------
 Full details and documentation can be found on the project page here:
