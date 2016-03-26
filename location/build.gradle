@@ -8,8 +8,8 @@ android {
     defaultConfig {
         minSdkVersion 9
         targetSdkVersion 23
-        versionCode 1
-        versionName VERSION_NAME
+        versionCode 2
+        versionName "6.2.3"
     }
     buildTypes {
         release {
@@ -20,5 +20,4 @@ android {
 }
 
 dependencies {
-    compile files('libs/locSDK_6.13.jar')
 }
