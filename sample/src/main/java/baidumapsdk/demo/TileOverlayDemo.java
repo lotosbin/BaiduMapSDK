@@ -16,6 +16,7 @@ import android.widget.EditText;
 
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.FileTileProvider;
+import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
@@ -34,7 +35,7 @@ import java.nio.ByteBuffer;
  * TileOverlay 测试demo
  * <p/>
  */
-public class TileOverlayDemo extends Activity {
+public class TileOverlayDemo extends Activity implements BaiduMap.OnMapLoadedCallback {
     @SuppressWarnings("unused")
     private static final String LTAG = BaseMapDemo.class.getSimpleName();
     private MapView mMapView;
@@ -43,15 +44,17 @@ public class TileOverlayDemo extends Activity {
     private Button mOffline;
     // 设置瓦片图的在线缓存大小，默认为20 M
     private static final int TILE_TMP = 20 * 1024 * 1024;
-    private static final int MAX_LEVEL = 20;
+    private static final int MAX_LEVEL = 21;
     private static final int MIN_LEVEL = 3;
     private EditText mEditText;
     private CheckBox hidePoiInfo = null;
     TileProvider tileProvider;
     TileOverlay tileOverlay;
     Tile offlineTile;
+    MapStatusUpdate mMapStatusUpdate;
     private  final String onlineUrl = "http://api0.map.bdimg.com/customimage/tile"
             + "?&x={x}&y={y}&z={z}&udt=20150601&customid=light";
+    private boolean mapLoaded = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,8 +62,12 @@ public class TileOverlayDemo extends Activity {
         setContentView(R.layout.activity_tile_overlay_demo);
         mMapView = (MapView) findViewById(R.id.mapview);
         mBaiduMap = mMapView.getMap();
-        MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(16.0f);
-        mBaiduMap.setMapStatus(msu);
+        mBaiduMap.setOnMapLoadedCallback(this);
+        MapStatus.Builder builder = new MapStatus.Builder();
+        builder.zoom(16.0f);
+        builder.target(new LatLng(39.914935D, 116.403119D));
+        mMapStatusUpdate = MapStatusUpdateFactory.newMapStatus(builder.build());
+        mBaiduMap.setMapStatus(mMapStatusUpdate);
         mOnline = (Button) findViewById(R.id.online);
         mOffline = (Button) findViewById(R.id.offline);
         mEditText = (EditText) findViewById(R.id.online_url);
@@ -79,6 +86,7 @@ public class TileOverlayDemo extends Activity {
         });
         hidePoiInfo.setOnCheckedChangeListener(new HidePoiInfoListener());
         mEditText.setText(onlineUrl);
+
     }
 
     /**
@@ -86,6 +94,7 @@ public class TileOverlayDemo extends Activity {
      */
     private void onlineTile() {
 
+        mBaiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
         if (tileOverlay != null && mBaiduMap != null) {
             tileOverlay.removeTileOverlay();
         }
@@ -119,7 +128,11 @@ public class TileOverlayDemo extends Activity {
         // 通过option指定相关属性，向地图添加在线瓦片图对象
         tileOverlay = mBaiduMap.addTileLayer(options.tileProvider(tileProvider).setMaxTileTmp(TILE_TMP)
                 .setPositionFromBounds(new LatLngBounds.Builder().include(northeast).include(southwest).build()));
-
+        if (mapLoaded) {
+            mBaiduMap.setMaxAndMinZoomLevel(21.0f, 3.0f);
+            mBaiduMap.setMapStatusLimits(new LatLngBounds.Builder().include(northeast).include(southwest).build());
+            mBaiduMap.setMapStatus(mMapStatusUpdate);
+        }
     }
 
     /**
@@ -170,7 +183,19 @@ public class TileOverlayDemo extends Activity {
                 .setPositionFromBounds(new LatLngBounds.Builder().include(northeast).include(southwest).build());
         // 通过option指定相关属性，向地图添加离线瓦片图对象
         tileOverlay = mBaiduMap.addTileLayer(options);
+        if (mapLoaded) {
+            setMapStatusLimits();
+        }
 
+    }
+
+    private void setMapStatusLimits() {
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+        builder.include(new LatLng(39.94001804746338, 116.41224644234747))
+                .include(new LatLng(39.90299859954822, 116.38359947963427));
+        mBaiduMap.setMapStatusLimits(builder.build());
+        mBaiduMap.setMaxAndMinZoomLevel(17.0f, 16.0f);
+        mBaiduMap.setMapType(BaiduMap.MAP_TYPE_NONE);
     }
 
     /**
@@ -191,6 +216,11 @@ public class TileOverlayDemo extends Activity {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @Override
+    public void onMapLoaded() {
+        mapLoaded = true;
     }
 
     private class HidePoiInfoListener implements CompoundButton.OnCheckedChangeListener {

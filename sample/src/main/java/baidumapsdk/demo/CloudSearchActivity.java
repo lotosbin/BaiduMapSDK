@@ -127,7 +127,7 @@ public class CloudSearchActivity extends Activity implements CloudListener {
             mBaiduMap.clear();
             BitmapDescriptor bd = BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding);
             LatLng ll;
-            Builder builder = new Builder();
+            LatLngBounds.Builder builder = new Builder();
             for (CloudPoiInfo info : result.poiList) {
                 ll = new LatLng(info.latitude, info.longitude);
                 OverlayOptions oo = new MarkerOptions().icon(bd).position(ll);

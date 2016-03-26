@@ -22,6 +22,10 @@ public class BaseMapDemo extends Activity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
+        // 介绍如何使用个性化地图，需在MapView 构造前设置个性化地图文件路径
+        // 注: 设置个性化地图，将会影响所有地图实例。
+        // MapView.setCustomMapStylePath("个性化地图config绝对路径");
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         if (intent.hasExtra("x") && intent.hasExtra("y")) {

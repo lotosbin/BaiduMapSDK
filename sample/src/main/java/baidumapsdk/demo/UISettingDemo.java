@@ -1,15 +1,20 @@
 package baidumapsdk.demo;
 
 import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.Point;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.TextView;
 
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.MapViewLayoutParams;
 import com.baidu.mapapi.map.UiSettings;
 
 /**
@@ -23,6 +28,11 @@ public class UISettingDemo extends Activity {
     private MapView mMapView;
     private BaiduMap mBaiduMap;
     private UiSettings mUiSettings;
+    private static final int paddingLeft = 100;
+    private static final int paddingTop = 200;
+    private static final int paddingRight = 100;
+    private static final int paddingBottom = 200;
+    TextView mTextView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,9 +43,25 @@ public class UISettingDemo extends Activity {
         mBaiduMap = mMapView.getMap();
         mUiSettings = mBaiduMap.getUiSettings();
 
-        MapStatus ms = new MapStatus.Builder().overlook(-30).build();
+        MapStatus ms = new MapStatus.Builder().build();
         MapStatusUpdate u = MapStatusUpdateFactory.newMapStatus(ms);
         mBaiduMap.animateMapStatus(u, 1000);
+        mBaiduMap.setOnMapLoadedCallback(new BaiduMap.OnMapLoadedCallback() {
+            @Override
+            public void onMapLoaded() {
+                mBaiduMap.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
+                addView(mMapView);
+            }
+        });
+
+        mMapView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // 介绍获取比例尺的宽高，需在MapView绘制完成之后
+                int scaleControlViewWidth = mMapView.getScaleControlViewWidth();
+                int scaleControlViewHeight = mMapView.getScaleControlViewHeight();
+            }
+        }, 0);
     }
 
     /**
@@ -90,6 +116,50 @@ public class UISettingDemo extends Activity {
     public void setMapPoiEnable(View v) {
         mBaiduMap.showMapPoi(((CheckBox) v).isChecked());
     }
+
+    /**
+     * 是否禁用所有手势
+     *
+     * @param v
+     */
+    public void setAllGestureEnable(View v) {
+        mUiSettings.setAllGesturesEnabled(!((CheckBox) v).isChecked());
+    }
+
+    /**
+     * 设置Padding区域
+     *
+     * @param v
+     */
+    public void setPadding( View v) {
+        if (((CheckBox) v).isChecked()) {
+            mBaiduMap.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
+            addView(mMapView);
+        } else {
+            mBaiduMap.setPadding(0, 0, 0, 0);
+            mMapView.removeView(mTextView);
+        }
+    }
+
+    private void addView(MapView mapView) {
+        mTextView = new TextView(this);
+        mTextView.setText(getText(R.string.instruction));
+        mTextView.setTextSize(15.0f);
+        mTextView.setGravity(Gravity.CENTER);
+        mTextView.setTextColor(Color.BLACK);
+        mTextView.setBackgroundColor(Color.parseColor("#AA00FF00"));
+
+        MapViewLayoutParams.Builder builder = new MapViewLayoutParams.Builder();
+        builder.layoutMode(MapViewLayoutParams.ELayoutMode.absoluteMode);
+        builder.width(mapView.getWidth());
+        builder.height(paddingBottom);
+        builder.point(new Point(0, mapView.getHeight()));
+        builder.align(MapViewLayoutParams.ALIGN_LEFT, MapViewLayoutParams.ALIGN_BOTTOM);
+
+        mapView.addView(mTextView, builder.build());
+
+    }
+
     @Override
     protected void onPause() {
         // MapView的生命周期与Activity同步，当activity挂起时需调用MapView.onPause()

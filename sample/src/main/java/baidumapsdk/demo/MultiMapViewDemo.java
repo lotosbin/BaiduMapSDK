@@ -3,6 +3,7 @@ package baidumapsdk.demo;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
+import com.baidu.mapapi.map.LogoPosition;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.SupportMapFragment;
@@ -33,21 +34,25 @@ public class MultiMapViewDemo extends FragmentActivity {
         SupportMapFragment map1 = (SupportMapFragment) (getSupportFragmentManager()
                 .findFragmentById(R.id.map1));
         map1.getBaiduMap().setMapStatus(u1);
+        map1.getMapView().setLogoPosition(LogoPosition.logoPostionleftTop);
 
         MapStatusUpdate u2 = MapStatusUpdateFactory.newLatLng(GEO_SHANGHAI);
         SupportMapFragment map2 = (SupportMapFragment) (getSupportFragmentManager()
                 .findFragmentById(R.id.map2));
         map2.getBaiduMap().setMapStatus(u2);
+        map2.getMapView().setLogoPosition(LogoPosition.logoPostionRightTop);
 
         MapStatusUpdate u3 = MapStatusUpdateFactory.newLatLng(GEO_GUANGZHOU);
         SupportMapFragment map3 = (SupportMapFragment) (getSupportFragmentManager()
                 .findFragmentById(R.id.map3));
         map3.getBaiduMap().setMapStatus(u3);
+        map3.getMapView().setLogoPosition(LogoPosition.logoPostionleftBottom);
 
         MapStatusUpdate u4 = MapStatusUpdateFactory.newLatLng(GEO_SHENGZHENG);
         SupportMapFragment map4 = (SupportMapFragment) (getSupportFragmentManager()
                 .findFragmentById(R.id.map4));
         map4.getBaiduMap().setMapStatus(u4);
+        map4.getMapView().setLogoPosition(LogoPosition.logoPostionRightBottom);
     }
 
 }

@@ -5,11 +5,11 @@ android {
     buildToolsVersion "23.0.1"
 
     defaultConfig {
-        applicationId "com.michael.baiduapis"
+        applicationId "baidumapsdk.demo"
         minSdkVersion 9
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.1"
     }
     buildTypes {
         release {
@@ -23,23 +23,22 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.1.0'
     compile 'com.android.support:design:23.1.0'
-
-    compile 'com.baidu.mapapi:base:3.6.0'
-    compile 'com.baidu.mapapi:map:3.6.0'
-    compile 'com.baidu.mapapi:cloud:3.6.0'
-    compile 'com.baidu.mapapi:radar:3.6.0'
-    compile 'com.baidu.mapapi:search:3.6.0'
-    compile 'com.baidu.mapapi:util:3.6.0'
-    compile 'com.baidu.mapapi:location:6.13'
-
-//    compile project(':map')
-//    compile project(':all')
-//    compile project(':base')
-//    compile project(':cloud')
-//    compile project(':radar')
-//    compile project(':search')
-//    compile project(':util')
-//    compile project(':location')
+    //    compile 'com.baidu.mapapi:base:3.6.0'
+    //    compile 'com.baidu.mapapi:map:3.6.0'
+    //    compile 'com.baidu.mapapi:cloud:3.6.0'
+    //    compile 'com.baidu.mapapi:radar:3.6.0'
+    //    compile 'com.baidu.mapapi:search:3.6.0'
+    //    compile 'com.baidu.mapapi:util:3.6.0'
+    //    compile 'com.baidu.mapapi:location:6.13'
+    compile project(':map')
+    compile project(':all')
+    compile project(':base')
+    compile project(':cloud')
+    compile project(':radar')
+    compile project(':search')
+    compile project(':util')
+    compile project(':location')
+    compile files('libs/baidumapapi_util_v3_7_0.jar')
 }
 
 repositories{

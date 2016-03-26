@@ -17,12 +17,16 @@ import com.baidu.mapapi.map.MapPoi;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.overlayutil.BikingRouteOverlay;
 import com.baidu.mapapi.overlayutil.DrivingRouteOverlay;
 import com.baidu.mapapi.overlayutil.OverlayManager;
 import com.baidu.mapapi.overlayutil.TransitRouteOverlay;
 import com.baidu.mapapi.overlayutil.WalkingRouteOverlay;
 import com.baidu.mapapi.search.core.RouteLine;
 import com.baidu.mapapi.search.core.SearchResult;
+import com.baidu.mapapi.search.route.BikingRouteLine;
+import com.baidu.mapapi.search.route.BikingRoutePlanOption;
+import com.baidu.mapapi.search.route.BikingRouteResult;
 import com.baidu.mapapi.search.route.DrivingRouteLine;
 import com.baidu.mapapi.search.route.DrivingRoutePlanOption;
 import com.baidu.mapapi.search.route.DrivingRouteResult;
@@ -105,6 +109,9 @@ public class RoutePlanDemo extends Activity implements BaiduMap.OnMapClickListen
         } else if (v.getId() == R.id.walk) {
             mSearch.walkingSearch((new WalkingRoutePlanOption())
                     .from(stNode).to(enNode));
+        } else if (v.getId() == R.id.bike) {
+            mSearch.bikingSearch((new BikingRoutePlanOption())
+                    .from(stNode).to(enNode));
         }
     }
 
@@ -147,6 +154,9 @@ public class RoutePlanDemo extends Activity implements BaiduMap.OnMapClickListen
         } else if (step instanceof TransitRouteLine.TransitStep) {
             nodeLocation = ((TransitRouteLine.TransitStep) step).getEntrance().getLocation();
             nodeTitle = ((TransitRouteLine.TransitStep) step).getInstructions();
+        } else if (step instanceof BikingRouteLine.BikingStep) {
+            nodeLocation = ((BikingRouteLine.BikingStep) step).getEntrance().getLocation();
+            nodeTitle = ((BikingRouteLine.BikingStep) step).getInstructions();
         }
 
         if (nodeLocation == null || nodeTitle == null) {
@@ -269,6 +279,30 @@ public class RoutePlanDemo extends Activity implements BaiduMap.OnMapClickListen
         }
     }
 
+    @Override
+    public void onGetBikingRouteResult(BikingRouteResult bikingRouteResult) {
+        if (bikingRouteResult == null || bikingRouteResult.error != SearchResult.ERRORNO.NO_ERROR) {
+            Toast.makeText(RoutePlanDemo.this, "抱歉，未找到结果", Toast.LENGTH_SHORT).show();
+        }
+        if (bikingRouteResult.error == SearchResult.ERRORNO.AMBIGUOUS_ROURE_ADDR) {
+            // 起终点或途经点地址有岐义，通过以下接口获取建议查询信息
+            // result.getSuggestAddrInfo()
+            return;
+        }
+        if (bikingRouteResult.error == SearchResult.ERRORNO.NO_ERROR) {
+            nodeIndex = -1;
+            mBtnPre.setVisibility(View.VISIBLE);
+            mBtnNext.setVisibility(View.VISIBLE);
+            route = bikingRouteResult.getRouteLines().get(0);
+            BikingRouteOverlay overlay = new MyBikingRouteOverlay(mBaidumap);
+            routeOverlay = overlay;
+            mBaidumap.setOnMarkerClickListener(overlay);
+            overlay.setData(bikingRouteResult.getRouteLines().get(0));
+            overlay.addToMap();
+            overlay.zoomToSpan();
+        }
+    }
+
     // 定制RouteOverly
     private class MyDrivingRouteOverlay extends DrivingRouteOverlay {
 
@@ -337,6 +371,30 @@ public class RoutePlanDemo extends Activity implements BaiduMap.OnMapClickListen
             }
             return null;
         }
+    }
+
+    private class MyBikingRouteOverlay extends BikingRouteOverlay {
+        public  MyBikingRouteOverlay(BaiduMap baiduMap) {
+            super(baiduMap);
+        }
+
+        @Override
+        public BitmapDescriptor getStartMarker() {
+            if (useDefaultIcon) {
+                return BitmapDescriptorFactory.fromResource(R.drawable.icon_st);
+            }
+            return null;
+        }
+
+        @Override
+        public BitmapDescriptor getTerminalMarker() {
+            if (useDefaultIcon) {
+                return BitmapDescriptorFactory.fromResource(R.drawable.icon_en);
+            }
+            return null;
+        }
+
+
     }
 
     @Override

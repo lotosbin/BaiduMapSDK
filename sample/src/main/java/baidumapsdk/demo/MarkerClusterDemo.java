@@ -20,7 +20,7 @@ import com.baidu.mapapi.model.LatLng;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MarkerClusterDemo extends Activity implements OnMapLoadedCallback{
+public class MarkerClusterDemo extends Activity implements OnMapLoadedCallback {
 
     MapView mMapView;
     BaiduMap mBaiduMap;
@@ -37,7 +37,7 @@ public class MarkerClusterDemo extends Activity implements OnMapLoadedCallback{
         mBaiduMap.setOnMapLoadedCallback(this);
         mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(ms));
         // 定义点聚合管理类ClusterManager
-        mClusterManager = new ClusterManager<>(this, mBaiduMap);
+        mClusterManager = new ClusterManager<MyItem>(this, mBaiduMap);
         // 添加Marker点
         addMarkers();
         // 设置地图监听，当地图状态发生改变时，进行点聚合运算
@@ -76,7 +76,7 @@ public class MarkerClusterDemo extends Activity implements OnMapLoadedCallback{
         LatLng llF = new LatLng(39.886965, 116.441394);
         LatLng llG = new LatLng(39.996965, 116.411394);
 
-        List<MyItem> items = new ArrayList<>();
+        List<MyItem> items = new ArrayList<MyItem>();
         items.add(new MyItem(llA));
         items.add(new MyItem(llB));
         items.add(new MyItem(llC));

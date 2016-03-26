@@ -63,7 +63,7 @@ import static com.baidu.mapapi.clusterutil.clustering.algo.NonHierarchicalDistan
  * The default view for a ClusterManager. Markers are animated in and out of clusters.
  */
 public class DefaultClusterRenderer<T extends ClusterItem> implements
-        ClusterRenderer<T> {
+        com.baidu.mapapi.clusterutil.clustering.view.ClusterRenderer<T> {
     private static final boolean SHOULD_ANIMATE = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
     private final BaiduMap mMap;
     private final IconGenerator mIconGenerator;
