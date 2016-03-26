@@ -5,9 +5,9 @@ Baidu map sdk wrapped to android 'aar' library and deployed to maven central
 Bai du map sdks wraped to android 'aar' library and deployed to maven central, based [Baidu map sdks](http://developer.baidu.com/map/).
 
 #Version
-mapapi: base,map,cloud,radar,search,util	3.6.0
+mapapi: base,map,cloud,radar,search,util	3.7.1
 
-location: 6.13
+location: 6.2.3
 
 trace: 2.0.0
 
@@ -43,13 +43,13 @@ repositories {
   }
 }
 dependencies {
-	compile 'com.baidu.mapapi:base:3.6.0'
-    compile 'com.baidu.mapapi:map:3.6.0'
-    compile 'com.baidu.mapapi:cloud:3.6.0'
-    compile 'com.baidu.mapapi:radar:3.6.0'
-    compile 'com.baidu.mapapi:search:3.6.0'
-    compile 'com.baidu.mapapi:util:3.6.0'
-    compile 'com.baidu.mapapi:location:6.13'
+    compile 'com.baidu.mapapi:base:3.7.1'
+    compile 'com.baidu.mapapi:map:3.7.1'
+    compile 'com.baidu.mapapi:cloud:3.7.1'
+    compile 'com.baidu.mapapi:radar:3.7.1'
+    compile 'com.baidu.mapapi:search:3.7.1'
+    compile 'com.baidu.mapapi:util:3.7.1'
+    compile 'com.baidu.mapapi:location:6.2.3'
 }
 ```
 Documentation, Features and Examples
